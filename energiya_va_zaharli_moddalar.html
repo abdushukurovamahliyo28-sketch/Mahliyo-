@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energiya va zaharli moddalar oqimi</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, Arial, sans-serif; background: #fffbeb; color: #1f2937; line-height: 1.6; }
+  header { background: linear-gradient(90deg, #ea580c, #dc2626); color: #fff; padding: 18px; text-align: center; }
+  header h1 { margin: 0; font-size: 1.5rem; }
+  header p { margin: 4px 0 0; opacity: .9; }
+  nav { position: sticky; top: 0; z-index: 5; background: #fff; display: flex; gap: 6px; overflow-x: auto; padding: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+  nav a { white-space: nowrap; padding: 6px 10px; border-radius: 16px; background: #ffedd5; color: #9a3412; text-decoration: none; font-size: .9rem; }
+  main { max-width: 900px; margin: 0 auto; padding: 12px; }
+  section { background: #fff; border-radius: 12px; padding: 18px; margin: 14px 0; box-shadow: 0 2px 6px rgba(0,0,0,.07); }
+  h2 { margin-top: 0; color: #c2410c; font-size: 1.25rem; }
+  h3 { color: #9a3412; font-size: 1.05rem; margin-bottom: 6px; }
+  .term { background: #fff7ed; border-left: 4px solid #ea580c; padding: 10px 12px; border-radius: 6px; margin: 8px 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .card { border: 1px solid #fed7aa; border-radius: 10px; padding: 12px; background: #fffbeb; }
+  .card .ico { font-size: 1.6rem; }
+  .note { background: #fef9c3; border-left: 4px solid #eab308; padding: 10px 12px; border-radius: 6px; margin: 10px 0; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  button, select, input { font: inherit; padding: 8px 12px; border-radius: 8px; border: 1px solid #ea580c; background: #fff; color: #9a3412; cursor: pointer; }
+  button:hover { background: #ffedd5; }
+  button.active { background: #ea580c; color: #fff; }
+  .chain { display: flex; align-items: stretch; gap: 6px; overflow-x: auto; padding: 8px 2px; }
+  .step { flex: 1; min-width: 110px; text-align: center; border-radius: 10px; padding: 10px 6px; background: #f3f4f6; transition: all .5s; border: 2px solid transparent; }
+  .step .ico { font-size: 1.8rem; }
+  .step .val { font-weight: 700; margin-top: 4px; }
+  .step .lvl { font-size: .8rem; color: #6b7280; }
+  .step.energy-on { background: #fde68a; border-color: #f59e0b; }
+  .step.toxic-on { border-color: #7c3aed; }
+  .arrow { align-self: center; font-size: 1.2rem; color: #9ca3af; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+  .bar-label { width: 150px; font-size: 14px; }
+  .bar { height: 26px; border-radius: 6px; color: #fff; display: flex; align-items: center; padding-left: 8px; font-size: 13px; transition: width .8s ease; min-width: 40px; }
+  #info { min-height: 80px; background: #f9fafb; border-left: 4px solid #ea580c; padding: 10px 14px; border-radius: 6px; margin-top: 10px; }
+  .slider-box { margin-top: 10px; }
+  input[type=range] { width: 100%; padding: 0; }
+  .quiz-q { margin-bottom: 14px; }
+  .quiz-q p { font-weight: 600; margin: 4px 0; }
+  .opt { display: block; margin: 4px 0; text-align: left; width: 100%; }
+  .ok { background: #bbf7d0 !important; }
+  .bad { background: #fecaca !important; }
+  #score { font-weight: 700; color: #c2410c; font-size: 1.05rem; }
+  footer { text-align: center; color: #6b7280; font-size: .85rem; padding: 16px; }
+  @media (max-width: 480px) { .bar-label { width: 100px; font-size: 12px; } header h1 { font-size: 1.25rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Energiya va zaharli moddalar oqimi</h1>
+  <p>6-sinf · Tabiiy fanlar</p>
+</header>
+
+<nav>
+  <a href="#maqsad">Maqsad</a>
+  <a href="#energiya">Energiya</a>
+  <a href="#zahar">Zaharli moddalar</a>
+  <a href="#oqim">Oqim</a>
+  <a href="#inson">Inson</a>
+  <a href="#test">Test</a>
+</nav>
+
+<main>
+
+  <section id="maqsad">
+    <h2>Dars maqsadi</h2>
+    <p>Bu darsda siz energiya nima ekanini, zaharli moddalar qayerdan paydo bo'lishini va ular oziq zanjiri orqali qanday to'planishini, hamda bu inson salomatligiga qanday ta'sir qilishini o'rganasiz.</p>
+  </section>
+
+  <section id="energiya">
+    <h2>1. Energiya nima?</h2>
+    <div class="term"><b>Energiya</b> – ish bajarish qobiliyati. Tabiatdagi barcha jarayonlar energiya sarfi bilan bog'liq.</div>
+    <div class="grid">
+      <div class="card"><div class="ico">☀️</div><b>Yorug'lik</b><br>Quyosh nurlari o'simliklarga fotosintez uchun energiya beradi.</div>
+      <div class="card"><div class="ico">🔥</div><b>Issiqlik</b><br>Tanamiz doimo issiqlik ajratadi. Energiyaning bir qismi shu shaklda yo'qoladi.</div>
+      <div class="card"><div class="ico">🧪</div><b>Kimyoviy</b><br>Ozuqada to'plangan energiya, masalan, uglevodlar va yog'lar.</div>
+      <div class="card"><div class="ico">🏃</div><b>Mexanik</b><br>Harakat qilganda mushaklar bajaradigan ish.</div>
+      <div class="card"><div class="ico">⚡</div><b>Elektr</b><br>Elektr tokida harakatlanuvchi energiya, masalan, lampochka va telefon.</div>
+    </div>
+    <div class="note">📌 Energiya yo'qolmaydi, bir turdan ikkinchisiga aylanadi. Oziq zanjirida esa energiyaning katta qismi issiqlik sifatida tarqaladi.</div>
+  </section>
+
+  <section id="zahar">
+    <h2>2. Zaharli moddalar nima?</h2>
+    <div class="term"><b>Zaharli modda</b> – organizmga zarar yetkazadigan va hayotiy jarayonlarni buzadigan moddalar.</div>
+    <div class="grid">
+      <div class="card"><div class="ico">🐍</div><b>Tabiiy zaharlar</b><br>Ilon zahari, zamburug' toksinlari, ba'zi o'simliklar tarkibidagi moddalar.</div>
+      <div class="card"><div class="ico">🏭</div><b>Sanoat chiqindilari</b><br>Og'ir metallar: simob, qo'rg'oshin, kadmiy.</div>
+      <div class="card"><div class="ico">🌾</div><b>Pestitsidlar</b><br>Zararkunandalarga qarshi ishlatiladigan kimyoviy vositalar.</div>
+      <div class="card"><div class="ico">💨</div><b>Chang va tutun</b><br>Transport va zavod chiqindilari, havoni ifloslantiradi.</div>
+    </div>
+    <div class="note">⚠️ Ko'p zaharli moddalar tabiatda oson parchalanmaydi va uzoq vaqt saqlanib qoladi.</div>
+  </section>
+
+  <section id="oqim">
+    <h2>3. Energiya va zahar oqimi</h2>
+    <p>Quyidagi tugmalar bilan ikki oqimni solishtiring. Bo'g'inni bosib, u haqida ma'lumot oling.</p>
+
+    <div class="btns">
+      <button id="btnEnergy" class="active" onclick="showFlow('energy')">Energiya oqimi</button>
+      <button id="btnToxic" onclick="showFlow('toxic')">Zahar oqimi</button>
+      <button onclick="runFlow()">▶ Animatsiyani boshlash</button>
+    </div>
+
+    <div id="chain" class="chain"></div>
+    <div id="info"></div>
+
+    <div id="energyBox">
+      <h3 style="margin-top:14px;">Energiya taqsimoti (taxminiy)</h3>
+      <div id="energyBars"></div>
+      <p>Har bir bosqichda energiyaning taxminan 90% i issiqlik sifatida yo'qoladi, faqat 10% keyingi bo'g'inga o'tadi.</p>
+    </div>
+
+    <div id="toxicBox" style="display:none;">
+      <h3 style="margin-top:14px;">Zaharli modda konsentratsiyasi</h3>
+      <div class="slider-box">
+        <label>Suvdagi zahar: <b id="concLabel">1</b> birlik</label>
+        <input type="range" id="conc" min="1" max="5" value="1" oninput="updateToxic()">
+      </div>
+      <h3 style="margin-top:14px;">Himoya choralari</h3>
+      <div class="btns">
+        <select id="protection">
+          <option value="0">Hech narsa qilinmagan</option>
+          <option value="0.5">Suvni tozalash (50% kamayadi)</option>
+          <option value="0.2">Sanoat filtrlari (80% kamayadi)</option>
+        </select>
+        <button onclick="updateToxic()">Qo'llash</button>
+      </div>
+      <div id="toxicBars"></div>
+      <p class="note">📌 Zahar o'simlikdan yuqori bo'g'inlarga o'tgani sari to'planadi. Bu jarayon <b>biomagnifikatsiya</b> deyiladi.</p>
+    </div>
+  </section>
+
+  <section id="inson">
+    <h2>4. Inson hayotida o'rni</h2>
+    <p>Zaharli moddalar inson organizmiga quyidagi yo'llar bilan tushadi:</p>
+    <ul>
+      <li>🥗 <b>Oziq-ovqat:</b> zaharli moddalar bilan ifloslangan sabzavot, mevalar va baliq.</li>
+      <li>💧 <b>Suv:</b> og'ir metallar bilan ifloslangan ichimlik suvi.</li>
+      <li>🌫️ <b>Havo:</b> chang, tutun va sanoat chiqindilarining nafas orqali kirishi.</li>
+    </ul>
+    <h3>Sog'liqqa ta'siri</h3>
+    <ul>
+      <li>Zaharlanish, bosh og'rig'i va ko'ngil aynishi</li>
+      <li>Allergiya va teri kasalliklari</li>
+      <li>Immunitetning zaiflashishi va o'sish sekinlashuvi</li>
+    </ul>
+    <h3>Himoya choralari</h3>
+    <div class="grid">
+      <div class="card"><div class="ico">🚰</div>Toza suv ichish</div>
+      <div class="card"><div class="ico">🍎</div>Meva va sabzavotlarni yuvish</div>
+      <div class="card"><div class="ico">🗑️</div>Chiqindilarni to'g'ri tashlash</div>
+      <div class="card"><div class="ico">🧴</div>Pestitsidlarni ehtiyotkorlik bilan ishlatish</div>
+      <div class="card"><div class="ico">💊</div>Dori-darmonlarni ko'rsatmaga muvofiq qabul qilish</div>
+    </div>
+  </section>
+
+  <section id="test">
+    <h2>5. Test</h2>
+    <div id="quiz"></div>
+    <p id="score"></p>
+  </section>
+
+</main>
+
+<footer>Energiya va zaharli moddalar oqimi · Interaktiv dars</footer>
+
+<script>
+const chainData = [
+  { key: "quyosh",   name: "Quyosh",         ico: "☀️", lvl: "Energiya manbai", energy: 100, toxicFactor: 0,   desc: "Barcha energiyaning asl manbai. Zahar tarkibiga kirmaydi." },
+  { key: "osimlik",  name: "O'simlik",       ico: "🌿", lvl: "Produsent",       energy: 10,  toxicFactor: 0.5, desc: "Fotosintez orqali energiya hosil qiladi. Tuproq va suvdan zaharli moddalarni so'rib oladi." },
+  { key: "hayvon",   name: "O'simlikxo'r hayvon", ico: "🐛", lvl: "Birinchi iste'molchi", energy: 1, toxicFactor: 1, desc: "O'simlik bilan oziqlanadi. Zahar o'simlikdan unga o'tadi va to'planadi." },
+  { key: "yirtqich", name: "Yirtqich",       ico: "🐍", lvl: "Ikkinchi iste'molchi", energy: 0.1, toxicFactor: 10, desc: "Hayvon bilan oziqlanadi. Zahar yanada ko'proq to'planadi." },
+  { key: "parchalovchi", name: "Parchalovchi", ico: "🍄", lvl: "Parchalovchi",    energy: 0.9, toxicFactor: 0,   desc: "O'lik organizmlarni parchalaydi. Energiyaning bir qismini issiqlik sifatida chiqaradi." }
+];
+
+// Suvdan boshlanuvchi zahar zanjiri
+const toxicChain = [
+  { name: "Suv",          ico: "💧", base: 0.1 },
+  { name: "Suv o'tlari",  ico: "🌿", base: 0.5 },
+  { name: "Baliqcha",     ico: "🐟", base: 1 },
+  { name: "Katta baliq",  ico: "🐠", base: 10 },
+  { name: "Baliqxo'r qush", ico: "🐦", base: 50 }
+];
+
+let mode = "energy";
+let timers = [];
+
+function renderChain() {
+  const box = document.getElementById("chain");
+  if (mode === "energy") {
+    box.innerHTML = chainData.map((s, i) =>
+      `${i ? '<div class="arrow">→</div>' : ''}
+       <div class="step" data-i="${i}" onclick="showInfo(${i})">
+         <div class="ico">${s.ico}</div><div>${s.name}</div>
+         <div class="lvl">${s.lvl}</div>
+         <div class="val">${s.energy}%</div>
+       </div>`).join("");
+  } else {
+    box.innerHTML = toxicChain.map((s, i) =>
+      `${i ? '<div class="arrow">→</div>' : ''}
+       <div class="step" data-i="${i}" onclick="showToxicInfo(${i})">
+         <div class="ico">${s.ico}</div><div>${s.name}</div>
+         <div class="val" id="tv${i}"></div>
+       </div>`).join("");
+  }
+}
+
+function showFlow(m) {
+  mode = m;
+  document.getElementById("btnEnergy").classList.toggle("active", m === "energy");
+  document.getElementById("btnToxic").classList.toggle("active", m === "toxic");
+  document.getElementById("energyBox").style.display = m === "energy" ? "block" : "none";
+  document.getElementById("toxicBox").style.display = m === "toxic" ? "block" : "none";
+  document.getElementById("info").innerHTML = "";
+  renderChain();
+  if (m === "toxic") updateToxic();
+  if (m === "energy") renderEnergyBars();
+}
+
+function showInfo(i) {
+  const s = chainData[i];
+  document.getElementById("info").innerHTML = `<b>${s.name}</b> (${s.lvl})<br>${s.desc}`;
+}
+
+function showToxicInfo(i) {
+  const s = toxicChain[i];
+  document.getElementById("info").innerHTML =
+    `<b>${s.name}</b><br>Bu bo'g'indagi zahar miqdori suvdagi zahar konsentratsiyasiga bog'liq. Yuqori bo'g'inda zahar to'planib boradi.`;
+}
+
+function renderEnergyBars() {
+  document.getElementById("energyBars").innerHTML = chainData.map((s, i) =>
+    `<div class="bar-row"><div class="bar-label">${s.name}</div>
+     <div class="bar" style="width:${Math.max(s.energy, 5)}%;background:#f59e0b">${s.energy}%</div></div>`
+  ).join("");
+}
+
+function updateToxic() {
+  const conc = Number(document.getElementById("conc").value);
+  document.getElementById("concLabel").textContent = conc;
+  const reduce = Number(document.getElementById("protection").value);
+  const factor = reduce === 0 ? 1 : reduce;
+  const values = toxicChain.map(s => +(s.base * conc * factor).toFixed(2));
+  document.getElementById("toxicBars").innerHTML = toxicChain.map((s, i) =>
+    `<div class="bar-row"><div class="bar-label">${s.name}</div>
+     <div class="bar" style="width:${Math.min(values[i] * 4, 100)}%;background:#7c3aed">${values[i]}</div></div>`
+  ).join("");
+  toxicChain.forEach((s, i) => {
+    const el = document.getElementById("tv" + i);
+    if (el) el.textContent = values[i];
+  });
+}
+
+function runFlow() {
+  timers.forEach(clearTimeout);
+  timers = [];
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("energy-on", "toxic-on"));
+  const cls = mode === "energy" ? "energy-on" : "toxic-on";
+  const count = document.querySelectorAll(".step").length;
+  for (let i = 0; i < count; i++) {
+    timers.push(setTimeout(() => {
+      document.querySelectorAll(".step")[i].classList.add(cls);
+    }, i * 800));
+  }
+}
+
+showFlow("energy");
+
+const questions = [
+  { q: "Energiyaning asl manbai nima?", o: ["Suv", "Quyosh", "O'simlik", "Havo"], a: 1 },
+  { q: "Zaharli modda oziq zanjirida qanday o'zgaradi?", o: ["Kamayadi", "To'planadi", "Yo'qoladi", "O'zgarmaydi"], a: 1 },
+  { q: "Biomagnifikatsiya nima?", o: ["Energiyaning yo'qolishi", "Zahar miqdorining yuqori bo'g'inlarda ortishi", "Suvning tozalanishi", "Quyosh nurining kuchayishi"], a: 1 },
+  { q: "Qaysi modda sanoat chiqindisi hisoblanadi?", o: ["Simob", "Ilon zahari", "Zamburug' toksini", "Sut"], a: 0 },
+  { q: "Inson zaharli moddani qaysi yo'l bilan olishi mumkin?", o: ["Faqat quyosh nuri orqali", "Ifloslangan oziq-ovqat va suv orqali", "Faqat uyqu orqali", "Hech qanday yo'l bilan"], a: 1 }
+];
+
+let score = 0, answered = 0;
+document.getElementById("quiz").innerHTML = questions.map((item, qi) => `
+  <div class="quiz-q">
+    <p>${qi + 1}. ${item.q}</p>
+    ${item.o.map((opt, oi) =>
+      `<button class="opt" onclick="answer(${qi}, ${oi}, this)">${opt}</button>`).join("")}
+  </div>`).join("");
+
+function answer(qi, oi, btn) {
+  const row = btn.parentElement;
+  if (row.dataset.done) return;
+  row.dataset.done = "1";
+  const correct = questions[qi].a;
+  row.querySelectorAll("button")[correct].classList.add("ok");
+  if (oi === correct) score++; else btn.classList.add("bad");
+  answered++;
+  const el = document.getElementById("score");
+  if (answered < questions.length) {
+    el.textContent = `Natija: ${score} / ${questions.length}`;
+  } else {
+    el.textContent = score === questions.length
+      ? `Ajoyib! Barcha savollarga to'g'ri javob berdingiz: ${score} / ${questions.length} 🎉`
+      : `Natija: ${score} / ${questions.length}. Mavzuni yana bir bor ko'rib chiqing.`;
+  }
+}
+</script>
+</body>
+</html>

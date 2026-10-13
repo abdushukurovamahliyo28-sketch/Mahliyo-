@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moddalarning xossalari</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, Arial, sans-serif; background: #eff6ff; color: #1f2937; line-height: 1.6; }
+  header { background: linear-gradient(90deg, #2563eb, #0891b2); color: #fff; padding: 18px; text-align: center; }
+  header h1 { margin: 0; font-size: 1.5rem; }
+  header p { margin: 4px 0 0; opacity: .9; }
+  nav { position: sticky; top: 0; z-index: 5; background: #fff; display: flex; gap: 6px; overflow-x: auto; padding: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+  nav a { white-space: nowrap; padding: 6px 10px; border-radius: 16px; background: #dbeafe; color: #1e40af; text-decoration: none; font-size: .9rem; }
+  main { max-width: 900px; margin: 0 auto; padding: 12px; }
+  section { background: #fff; border-radius: 12px; padding: 18px; margin: 14px 0; box-shadow: 0 2px 6px rgba(0,0,0,.07); }
+  h2 { margin-top: 0; color: #1d4ed8; font-size: 1.25rem; }
+  h3 { color: #1e40af; font-size: 1.05rem; margin-bottom: 6px; }
+  .term { background: #eff6ff; border-left: 4px solid #2563eb; padding: 10px 12px; border-radius: 6px; margin: 8px 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .card { border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px; background: #f8fafc; }
+  .card .ico { font-size: 1.6rem; }
+  .note { background: #fef9c3; border-left: 4px solid #eab308; padding: 10px 12px; border-radius: 6px; margin: 10px 0; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  button, select, input { font: inherit; padding: 8px 12px; border-radius: 8px; border: 1px solid #2563eb; background: #fff; color: #1e40af; cursor: pointer; }
+  button:hover { background: #dbeafe; }
+  button.active { background: #2563eb; color: #fff; }
+  .particles { position: relative; height: 160px; background: #f1f5f9; border-radius: 10px; overflow: hidden; margin: 10px 0; }
+  .p { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #2563eb; transition: all 1s ease; }
+  .state-solid .p { transition: none; }
+  .tank { position: relative; height: 200px; background: linear-gradient(#bae6fd, #0ea5e9); border-radius: 0 0 12px 12px; border: 3px solid #0369a1; border-top: none; margin: 10px 0; overflow: hidden; }
+  .obj { position: absolute; left: 50%; top: -60px; transform: translateX(-50%); width: 60px; height: 40px; border-radius: 6px; transition: top 1.2s ease-in; font-size: 1.8rem; text-align: center; line-height: 40px; }
+  .heatbar { display: flex; gap: 4px; margin: 10px 0; }
+  .heatbar div { flex: 1; height: 30px; border-radius: 4px; transition: background .6s; }
+  #info { min-height: 90px; background: #f9fafb; border-left: 4px solid #2563eb; padding: 10px 14px; border-radius: 6px; margin-top: 10px; }
+  #info b { color: #1d4ed8; }
+  .quiz-q { margin-bottom: 14px; }
+  .quiz-q p { font-weight: 600; margin: 4px 0; }
+  .opt { display: block; margin: 4px 0; text-align: left; width: 100%; }
+  .ok { background: #bbf7d0 !important; }
+  .bad { background: #fecaca !important; }
+  #score { font-weight: 700; color: #1d4ed8; font-size: 1.05rem; }
+  footer { text-align: center; color: #6b7280; font-size: .85rem; padding: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Moddalarning xossalari</h1>
+  <p>6-sinf · Tabiiy fanlar</p>
+</header>
+
+<nav>
+  <a href="#maqsad">Maqsad</a>
+  <a href="#modda">Modda</a>
+  <a href="#orni">Hayotdagi o'rni</a>
+  <a href="#xossalar">Xossalar</a>
+  <a href="#tajriba">Tajribalar</a>
+  <a href="#test">Test</a>
+</nav>
+
+<main>
+
+  <section id="maqsad">
+    <h2>Dars maqsadi</h2>
+    <p>Bu darsda siz modda nima ekanini, hayotimizda moddalarning qanday o'rin tutishini va ularning fizik hamda kimyoviy xossalarini o'rganasiz.</p>
+  </section>
+
+  <section id="modda">
+    <h2>1. Modda nima?</h2>
+    <div class="term"><b>Modda</b> – massaga ega bo'lgan va bo'shliqni egallaydigan narsa. Hamma narsa moddadan tashkil topgan.</div>
+    <p>Moddalar uch agregat holatda bo'ladi. Quyidagi tugmalar bilan zarrachalar harakatini kuzating:</p>
+    <div class="btns">
+      <button id="bSolid" class="active" onclick="setState('solid')">Qattiq</button>
+      <button id="bLiquid" onclick="setState('liquid')">Suyuq</button>
+      <button id="bGas" onclick="setState('gas')">Gaz</button>
+    </div>
+    <div id="particles" class="particles state-solid"></div>
+    <div id="stateInfo" class="note"></div>
+  </section>
+
+  <section id="orni">
+    <h2>2. Hayotimizda moddalarning o'rni</h2>
+    <div class="grid">
+      <div class="card"><div class="ico">🏗️</div><b>Qurilish</b><br>Temir va beton binolarni mustahkam qiladi.</div>
+      <div class="card"><div class="ico">🧂</div><b>Oshxona</b><br>Tuz va shakar taomlarga ta'm beradi.</div>
+      <div class="card"><div class="ico">👕</div><b>Kiyim</b><br>Paxta va ip kiyim tayyorlashda ishlatiladi.</div>
+      <div class="card"><div class="ico">🫙</div><b>Idishlar</b><br>Shisha va plastik idishlar uchun qulay materiallar.</div>
+      <div class="card"><div class="ico">💧</div><b>Suv va havo</b><br>Barcha tirik organizmlar uchun hayotiy zarur moddalar.</div>
+    </div>
+  </section>
+
+  <section id="xossalar">
+    <h2>3. Moddalarning xossalari</h2>
+
+    <div class="btns">
+      <select id="material" onchange="showMaterial()">
+        <option value="suv">Suv</option>
+        <option value="temir">Temir</option>
+        <option value="mis">Mis</option>
+        <option value="yogoch">Yog'och</option>
+        <option value="shisha">Shisha</option>
+        <option value="tuz">Tuz</option>
+        <option value="havo">Havo</option>
+      </select>
+      <button id="bPhys" class="active" onclick="showType('phys')">Fizik xossalar</button>
+      <button id="bChem" onclick="showType('chem')">Kimyoviy xossalar</button>
+    </div>
+
+    <div id="card" class="term"></div>
+    <div id="info"></div>
+  </section>
+
+  <section id="tajriba">
+    <h2>4. Tajribalar</h2>
+
+    <h3>Issiqlik o'tkazuvchanlik</h3>
+    <p>Moddani tanlang va "Isitish" tugmasini bosing. Issiqlik qanchalik tez tarqalishini kuzating.</p>
+    <div class="btns">
+      <select id="heatMat" onchange="resetHeat()">
+        <option value="mis">Mis</option>
+        <option value="temir">Temir</option>
+        <option value="yogoch">Yog'och</option>
+        <option value="shisha">Shisha</option>
+      </select>
+      <button onclick="runHeat()">Isitish</button>
+    </div>
+    <div class="heatbar" id="heatBar"></div>
+    <p id="heatText" class="note"></p>
+
+    <h3>Magnit tajribasi</h3>
+    <p>Magnitni tanlangan moddaga yaqinlashtiring.</p>
+    <div class="btns">
+      <select id="magMat">
+        <option value="temir">Temir</option>
+        <option value="mis">Mis</option>
+        <option value="yogoch">Yog'och</option>
+        <option value="shisha">Shisha</option>
+      </select>
+      <button onclick="runMagnet()">Magnitni yaqinlashtirish</button>
+    </div>
+    <div id="magnetResult" class="note"></div>
+
+    <h3>Suv bilan tajriba</h3>
+    <p>Moddani suvga tashlang va u cho'kadimi yoki suzadimi, kuzating.</p>
+    <div class="btns">
+      <select id="waterMat">
+        <option value="yogoch">Yog'och</option>
+        <option value="temir">Temir</option>
+        <option value="mis">Mis</option>
+        <option value="tuz">Tuz</option>
+      </select>
+      <button onclick="runWater()">Suvga tashlash</button>
+    </div>
+    <div class="tank">
+      <div id="waterObj" class="obj">🪵</div>
+    </div>
+    <p id="waterText" class="note"></p>
+  </section>
+
+  <section id="test">
+    <h2>5. Test</h2>
+    <div id="quiz"></div>
+    <p id="score"></p>
+  </section>
+
+</main>
+
+<footer>Moddalarning xossalari · Interaktiv dars</footer>
+
+<script>
+// ---------- 1. Agregat holatlar ----------
+const stateText = {
+  solid: "Qattiq holatda zarrachalar bir-biriga zich joylashgan va faqat tebranadi. Shakli va hajmi o'zgarmaydi.",
+  liquid: "Suyuq holatda zarrachalar bir-biriga yaqin, lekin bir-biriga nisbatan siljiy oladi. Hajmi o'zgarmaydi, shakli idishga moslashadi.",
+  gas: "Gaz holatida zarrachalar bir-biridan uzoq va juda tez harakatlanadi. Shakli ham, hajmi ham o'zgaruvchan."
+};
+
+function setState(s) {
+  ["solid", "liquid", "gas"].forEach(x =>
+    document.getElementById("b" + x.charAt(0).toUpperCase() + x.slice(1)).classList.toggle("active", x === s));
+  const box = document.getElementById("particles");
+  box.className = "particles state-" + s;
+  box.innerHTML = "";
+  const count = 18;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement("div");
+    p.className = "p";
+    let x, y;
+    if (s === "solid") {
+      const col = i % 6, row = Math.floor(i / 6);
+      x = 8 + col * 15; y = 20 + row * 40;
+    } else if (s === "liquid") {
+      x = 5 + Math.random() * 85; y = 90 + Math.random() * 60;
+    } else {
+      x = 5 + Math.random() * 85; y = 5 + Math.random() * 130;
+    }
+    p.style.left = x + "%";
+    p.style.top = y + "px";
+    box.appendChild(p);
+    if (s === "gas") moveGas(p);
+    if (s === "liquid") moveLiquid(p);
+  }
+  document.getElementById("stateInfo").textContent = stateText[s];
+}
+
+function moveGas(p) {
+  const step = () => {
+    p.style.left = (5 + Math.random() * 85) + "%";
+    p.style.top = (5 + Math.random() * 130) + "px";
+    setTimeout(step, 800 + Math.random() * 600);
+  };
+  step();
+}
+
+function moveLiquid(p) {
+  const step = () => {
+    p.style.left = (5 + Math.random() * 85) + "%";
+    setTimeout(step, 1200);
+  };
+  step();
+}
+
+// ---------- 2. Fizik va kimyoviy xossalar ----------
+const materials = {
+  suv:   { name: "Suv", ico: "💧", phys: "Rangsiz, hidsiz, ta'msiz suyuqlik. Zichligi 1 g/sm³. 0°C da muzlaydi, 100°C da qaynaydi.", chem: "Ko'pgina moddalarni eritadi. Natriy bilan reaksiyaga kirishib vodorod ajratadi." },
+  temir: { name: "Temir", ico: "🔩", phys: "Qattiq, kulrang metall. Magnitlanadi, issiqlik va elektrni yaxshi o'tkazadi. Zichligi 7,87 g/sm³.", chem: "Namlik va kislorod ta'sirida zanglaydi. Kislotalar bilan reaksiyaga kirishadi." },
+  mis:   { name: "Mis", ico: "🟤", phys: "Qizil-jigarrang metall. Magnitlanmaydi. Issiqlik va elektrni juda yaxshi o'tkazadi. Egiluvchan.", chem: "Havoda asta-sekin yashil qatlam (patina) hosil qiladi. Kislorod bilan reaksiyaga kirishadi." },
+  yogoch:{ name: "Yog'och", ico: "🪵", phys: "Yengil, g'ovak va qattiq material. Issiqlikni yomon o'tkazadi. Suvdan yengil bo'lgani uchun suzadi.", chem: "Yonuvchan. Havo bilan qizdirilganda yonib, issiqlik va kul hosil qiladi." },
+  shisha:{ name: "Shisha", ico: "🪟", phys: "Shaffof, qattiq va mo'rt material. Issiqlikni yomon o'tkazadi. Magnitlanmaydi.", chem: "Kimyoviy jihatdan barqaror. Kuchli kislotalar va ishqorlar ta'siriga qarshi turadi." },
+  tuz:   { name: "Tuz (oshxona tuzi)", ico: "🧂", phys: "Oq rangli kristall modda. Suvda yaxshi eriydi. Ta'mi sho'r.", chem: "Suvda eriganda ionlarga ajraladi. Kumush nitrat bilan reaksiyaga kirib oq cho'kma hosil qiladi." },
+  havo:  { name: "Havo", ico: "🌬️", phys: "Rangsiz va hidsiz gazlar aralashmasi. Zichligi past va siqiladigan.", chem: "Tarkibida kislorod bor. Kislorod yonish va nafas olish uchun zarur." }
+};
+
+let currentType = "phys";
+
+function showMaterial() {
+  renderCard();
+  renderInfo();
+}
+
+function showType(t) {
+  currentType = t;
+  document.getElementById("bPhys").classList.toggle("active", t === "phys");
+  document.getElementById("bChem").classList.toggle("active", t === "chem");
+  renderCard();
+  renderInfo();
+}
+
+function renderCard() {
+  const key = document.getElementById("material").value;
+  const m = materials[key];
+  document.getElementById("card").innerHTML =
+    `<b>${m.ico} ${m.name}</b><br>${currentType === "phys" ? "Fizik xossalari" : "Kimyoviy xossalari"}: ${currentType === "phys" ? m.phys : m.chem}`;
+}
+
+function renderInfo() {
+  const key = document.getElementById("material").value;
+  const m = materials[key];
+  document.getElementById("info").innerHTML =
+    `<b>${m.name}</b> – xossalarini solishtirish uchun boshqa moddani tanlang yoki tajribalarni sinab ko'ring.`;
+}
+
+// ---------- 3. Issiqlik o'tkazuvchanlik ----------
+const heatSpeed = { mis: 1, temir: 2, shisha: 4, yogoch: 6 };
+const heatLabel = { mis: "Mis", temir: "Temir", shisha: "Shisha", yogoch: "Yog'och" };
+
+function resetHeat() {
+  document.getElementById("heatBar").innerHTML = "";
+  for (let i = 0; i < 8; i++) {
+    const d = document.createElement("div");
+    d.style.background = "#e5e7eb";
+    document.getElementById("heatBar").appendChild(d);
+  }
+  document.getElementById("heatText").textContent = "";
+}
+
+function runHeat() {
+  resetHeat();
+  const mat = document.getElementById("heatMat").value;
+  const cells = document.querySelectorAll("#heatBar div");
+  const speed = heatSpeed[mat];
+  cells[0].style.background = "#dc2626";
+  for (let i = 1; i < cells.length; i++) {
+    setTimeout(() => {
+      cells[i].style.background = `hsl(${10 + i * 5}, 90%, ${60 - i * 3}%)`;
+    }, i * 300 * speed);
+  }
+  const total = cells.length * 300 * speed;
+  setTimeout(() => {
+    document.getElementById("heatText").textContent =
+      `${heatLabel[mat]} orqali issiqlik ${speed === 1 ? "eng tez" : speed <= 2 ? "tez" : speed <= 4 ? "sekin" : "juda sekin"} tarqaldi. ` +
+      (mat === "mis" ? "Mis issiqlikni yaxshi o'tkazadi." : "Bu modda issiqlikni yomon o'tkazadi.");
+  }, total);
+}
+
+// ---------- 4. Magnit ----------
+function runMagnet() {
+  const mat = document.getElementById("magMat").value;
+  const magnetic = mat === "temir";
+  document.getElementById("magnetResult").textContent = magnetic
+    ? `${materials[mat].name} magnit tomonidan tortildi, chunki temir magnitlanadigan moddadir.`
+    : `${materials[mat].name} magnit tomonidan tortilmadi, chunki u magnitlanmaydi.`;
+}
+
+// ---------- 5. Suv bilan tajriba ----------
+const waterData = {
+  yogoch: { ico: "🪵", float: true,  text: "Yog'och suvda suzdi, chunki zichligi suvnikidan kichik." },
+  temir:  { ico: "🔩", float: false, text: "Temir suvda cho'kdi, chunki zichligi suvnikidan katta." },
+  mis:    { ico: "🟤", float: false, text: "Mis suvda cho'kdi, chunki zichligi suvnikidan katta." },
+  tuz:    { ico: "🧂", float: null,  text: "Tuz suvda erib ketdi. Uni cho'kma yoki suzish deb bo'lmaydi, chunki u eriydi." }
+};
+
+function runWater() {
+  const key = document.getElementById("waterMat").value;
+  const obj = document.getElementById("waterObj");
+  const d = waterData[key];
+  obj.textContent = d.ico;
+  obj.style.transition = "none";
+  obj.style.top = "-60px";
+  obj.offsetHeight;
+  obj.style.transition = "top 1.2s ease-in";
+  if (d.float === true) {
+    obj.style.top = "10px";
+  } else if (d.float === false) {
+    obj.style.top = "130px";
+  } else {
+    obj.style.top = "60px";
+    obj.style.opacity = "0.4";
+    setTimeout(() => obj.style.opacity = "1", 1500);
+  }
+  document.getElementById("waterText").textContent = d.text;
+}
+
+// ---------- Boshlang'ich holat ----------
+setState("solid");
+showType("phys");
+showMaterial();
+resetHeat();
+
+// ---------- Test ----------
+const questions = [
+  { q: "Qattiq holatda zarrachalar qanday joylashgan?", o: ["Bir-biridan uzoq", "Bir-biriga zich", "Tartibsiz va tez harakatda", "Idishga moslashgan"], a: 1 },
+  { q: "Qaysi modda magnitlanadi?", o: ["Yog'och", "Shisha", "Temir", "Mis"], a: 2 },
+  { q: "Qaysi modda suvda suzadi?", o: ["Temir", "Mis", "Yog'och", "Tuz"], a: 2 },
+  { q: "Temirning zanglashi qaysi xossaga kiradi?", o: ["Fizik xossa", "Kimyoviy xossa", "Agregat holat", "Magnitlanish"], a: 1 },
+  { q: "Qaysi modda issiqlikni eng yaxshi o'tkazadi?", o: ["Yog'och", "Shisha", "Mis", "Havo"], a: 2 }
+];
+
+let score = 0, answered = 0;
+document.getElementById("quiz").innerHTML = questions.map((item, qi) => `
+  <div class="quiz-q">
+    <p>${qi + 1}. ${item.q}</p>
+    ${item.o.map((opt, oi) =>
+      `<button class="opt" onclick="answer(${qi}, ${oi}, this)">${opt}</button>`).join("")}
+  </div>`).join("");
+
+function answer(qi, oi, btn) {
+  const row = btn.parentElement;
+  if (row.dataset.done) return;
+  row.dataset.done = "1";
+  const correct = questions[qi].a;
+  row.querySelectorAll("button")[correct].classList.add("ok");
+  if (oi === correct) score++; else btn.classList.add("bad");
+  answered++;
+  const el = document.getElementById("score");
+  if (answered < questions.length) {
+    el.textContent = `Natija: ${score} / ${questions.length}`;
+  } else {
+    el.textContent = score === questions.length
+      ? `Ajoyib! Barcha savollarga to'g'ri javob berdingiz: ${score} / ${questions.length} 🎉`
+      : `Natija: ${score} / ${questions.length}. Mavzuni yana bir bor ko'rib chiqing.`;
+  }
+}
+</script>
+</body>
+</html>

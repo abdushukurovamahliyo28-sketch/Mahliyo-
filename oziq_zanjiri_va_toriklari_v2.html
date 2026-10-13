@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oziq zanjirlari va oziq to'rlari</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, Arial, sans-serif; background: #f0fdf4; color: #1f2937; line-height: 1.6; }
+  header { background: linear-gradient(90deg, #16a34a, #22c55e); color: #fff; padding: 18px; text-align: center; }
+  header h1 { margin: 0; font-size: 1.5rem; }
+  header p { margin: 4px 0 0; opacity: .9; font-size: .95rem; }
+  nav { position: sticky; top: 0; background: #fff; z-index: 5; display: flex; gap: 6px; overflow-x: auto;
+    padding: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+  nav a { white-space: nowrap; padding: 6px 10px; border-radius: 16px; background: #dcfce7; color: #15803d;
+    text-decoration: none; font-size: .9rem; }
+  main { max-width: 920px; margin: 0 auto; padding: 12px; }
+  section { background: #fff; border-radius: 12px; padding: 18px; margin: 14px 0; box-shadow: 0 2px 6px rgba(0,0,0,.07); }
+  h2 { margin-top: 0; color: #15803d; font-size: 1.25rem; }
+  h3 { color: #166534; font-size: 1.05rem; margin-bottom: 6px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+  button, select { font: inherit; padding: 8px 12px; border-radius: 8px; border: 1px solid #16a34a; background: #fff; color: #15803d; cursor: pointer; }
+  button:hover { background: #dcfce7; }
+  button.active { background: #16a34a; color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .card { border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px; background: #f7fee7; }
+  .card .ico { font-size: 1.6rem; }
+  .note { background: #fef9c3; border-left: 4px solid #eab308; padding: 10px 12px; border-radius: 6px; margin: 10px 0; }
+  .term { background: #ecfdf5; border-left: 4px solid #16a34a; padding: 10px 12px; border-radius: 6px; margin: 8px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { border: 1px solid #d1d5db; padding: 6px 8px; text-align: left; }
+  th { background: #dcfce7; }
+  svg#field { width: 100%; height: auto; display: block; background: #ecfccb; border-radius: 10px; }
+  .node circle { stroke: #fff; stroke-width: 3; cursor: pointer; transition: opacity .4s; }
+  .node text { font-size: 13px; text-anchor: middle; pointer-events: none; fill: #1f2937; font-weight: 600; }
+  .node.removed circle { fill: #9ca3af !important; }
+  .node.dim { opacity: .2; }
+  .edge { stroke: #374151; stroke-width: 2; fill: none; transition: opacity .4s; }
+  .edge.decomp { stroke-dasharray: 5 5; stroke: #92400e; }
+  .edge.dim { opacity: .08; }
+  .edge.flow { stroke: #f97316; stroke-width: 4; stroke-dasharray: 10 8; animation: flow 1s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -18; } }
+  #info { min-height: 90px; background: #f9fafb; border-left: 4px solid #16a34a; padding: 10px 14px; border-radius: 6px; }
+  #effect { margin-top: 10px; color: #b45309; font-weight: 600; min-height: 24px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+  .bar-label { width: 150px; font-size: 14px; }
+  .bar { height: 28px; border-radius: 6px; color: #fff; display: flex; align-items: center; padding-left: 8px; font-size: 13px; transition: width .8s ease; }
+  .quiz-q { margin-bottom: 14px; }
+  .quiz-q p { font-weight: 600; margin: 4px 0; }
+  .opt { display: block; margin: 4px 0; text-align: left; width: 100%; }
+  .ok { background: #bbf7d0 !important; }
+  .bad { background: #fecaca !important; }
+  #score { font-weight: 700; color: #15803d; font-size: 1.05rem; }
+  footer { text-align: center; color: #6b7280; font-size: .85rem; padding: 16px; }
+  @media (max-width: 480px) { .bar-label { width: 100px; font-size: 12px; } header h1 { font-size: 1.25rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Oziq zanjirlari va oziq to'rlari</h1>
+  <p>6-sinf · Tabiiy fanlar</p>
+</header>
+
+<nav>
+  <a href="#maqsad">Maqsad</a>
+  <a href="#ozuqa">Ozuqa</a>
+  <a href="#ahamiyat">Ahamiyati</a>
+  <a href="#zanjir">Zanjir va to'r</a>
+  <a href="#tajriba">Tajriba</a>
+  <a href="#piramida">Piramida</a>
+  <a href="#test">Test</a>
+</nav>
+
+<main>
+
+  <section id="maqsad">
+    <h2>Dars maqsadi</h2>
+    <p>Bu darsda siz quyidagilarni o'rganasiz:</p>
+    <ul>
+      <li>ozuqa nima va u qanday moddalardan iborat ekanini;</li>
+      <li>inson hayotida ozuqaning ahamiyatini;</li>
+      <li>oziq zanjiri va oziq to'ri tushunchalarini hamda ularning farqini;</li>
+      <li>tabiatda energiya qanday uzatilishini va nima uchun muhimligini.</li>
+    </ul>
+  </section>
+
+  <section id="ozuqa">
+    <h2>1. Ozuqa nima?</h2>
+    <div class="term"><b>Ozuqa</b> – tirik organizmlar energiya olish, o'sish, ko'payish va yashash uchun iste'mol qiladigan moddalar yig'indisidir.</div>
+    <p>Barcha energiyaning asl manbai – <b>Quyosh</b>. Tirik organizmlar ozuqa orqali shu energiyadan foydalanadi.</p>
+
+    <h3>Ozuqa tarkibidagi asosiy moddalar</h3>
+    <div class="grid">
+      <div class="card"><div class="ico">🍞</div><b>Uglevodlar</b><br>Tanaga asosiy energiya beradi. Masalan: non, guruch, kartoshka, shakar.</div>
+      <div class="card"><div class="ico">🥚</div><b>Oqsillar</b><br>Mushaklar, suyak va to'qimalar uchun qurilish materiali. Masalan: go'sht, tuxum, baliq, dukkaklilar.</div>
+      <div class="card"><div class="ico">🥑</div><b>Yog'lar</b><br>Zaxira energiya manbai, organlarni himoya qiladi. Masalan: sariyog', yong'oq, zaytun moyi.</div>
+      <div class="card"><div class="ico">🥕</div><b>Vitaminlar</b><br>Kam miqdorda kerak, lekin organizm faoliyati uchun zarur. Masalan: sabzi (A), apelsin (C).</div>
+      <div class="card"><div class="ico">🥛</div><b>Minerallar</b><br>Suyak va tishlar uchun kalsiy, qon uchun temir kabi moddalar.</div>
+      <div class="card"><div class="ico">💧</div><b>Suv</b><br>Hayot uchun eng muhim modda. Barcha jarayonlar suvda kechadi.</div>
+    </div>
+
+    <h3 style="margin-top:14px;">Ozuqa manbalariga ko'ra</h3>
+    <table>
+      <tr><th>Guruh</th><th>Qanday oziqlanadi?</th><th>Misollar</th></tr>
+      <tr><td>Produsentlar</td><td>Quyosh energiyasi bilan o'z ozuqasini hosil qiladi (fotosintez)</td><td>O'simliklar, suv o'tlari</td></tr>
+      <tr><td>Iste'molchilar</td><td>Tayyor ozuqani boshqa organizmlardan oladi</td><td>Hayvonlar, odam</td></tr>
+      <tr><td>Parchalovchilar</td><td>O'lgan organizmlar va chiqindilarni parchalaydi</td><td>Zamburug'lar, bakteriyalar</td></tr>
+    </table>
+  </section>
+
+  <section id="ahamiyat">
+    <h2>2. Inson hayotida ozuqaning ahamiyati</h2>
+    <ul>
+      <li><b>Energiya beradi:</b> yurish, yugurish, o'qish, hatto uxlaganda ham tana energiya sarflaydi.</li>
+      <li><b>O'sish va tiklanish:</b> bolalarning bo'yi va vazni o'sishi, jarohatlar bitishi ozuqaga bog'liq.</li>
+      <li><b>Immunitet:</b> vitamin va minerallar kasalliklarga qarshi kurashishga yordam beradi.</li>
+      <li><b>Aqliy faoliyat:</b> miya ham energiya va to'g'ri ozuqa moddalariga muhtoj.</li>
+      <li><b>Sog'lom turmush:</b> muvozanatli ovqatlanish umr davomiyligi va salomatlikni oshiradi.</li>
+    </ul>
+    <div class="note">⚠️ Ozuqa yetishmasligi (ochlik, vitamin yetishmovchiligi) kasalliklarga, charchoqqa va o'sishning sekinlashishiga olib keladi. Ortiqcha ovqatlanish esa semizlikka sabab bo'ladi.</div>
+  </section>
+
+  <section id="zanjir">
+    <h2>3. Oziq zanjiri va oziq to'ri</h2>
+
+    <div class="term"><b>Oziq zanjiri</b> – organizmlarning bir-biri bilan ozuqa orqali bog'langan ketma-ket qatori. Har bir bo'g'in o'zidan oldingi bo'g'in bilan oziqlanadi.</div>
+    <div class="term"><b>Oziq to'ri</b> – bir nechta oziq zanjirlarining o'zaro bog'lanishidan hosil bo'lgan murakkab tarmoq. Tabiatda ko'pchilik organizmlar bir nechta turdagi ozuqa bilan oziqlanadi.</div>
+
+    <h3>Bo'g'inlar nomi</h3>
+    <ul>
+      <li><b>Produsent</b> – o'z ozuqasini o'zi hosil qiladi (o'simliklar).</li>
+      <li><b>Birinchi iste'molchi</b> – produsent bilan oziqlanadi (o'simlikxo'r hayvonlar).</li>
+      <li><b>Ikkinchi iste'molchi</b> – birinchi iste'molchi bilan oziqlanadi (go'shtxo'r hayvonlar).</li>
+      <li><b>Uchinchi iste'molchi va undan yuqori</b> – boshqa yirtqichlar bilan oziqlanadi.</li>
+      <li><b>Parchalovchi</b> – o'lik organizmlarni parchalab, moddalarni tuproqqa qaytaradi.</li>
+    </ul>
+
+    <h3>Tabiiy misollar</h3>
+    <table>
+      <tr><th>Ekotizim</th><th>Oziq zanjiri</th></tr>
+      <tr><td>Dasht</td><td>O'tlar → Chigirtka → Qurbaqa → Ilon → Burgut</td></tr>
+      <tr><td>O'rmon</td><td>Daraxt bargi → Qo'ng'iz → Tulki... (Tulki → Bo'ri)</td></tr>
+      <tr><td>Suv havzasi</td><td>Suv o'tlari → Zooplankton → Baliqcha → Katta baliq</td></tr>
+      <tr><td>Qishloq xo'jaligi</td><td>Bug'doy → Sichqon → Ilon → Boyqush</td></tr>
+    </table>
+
+    <div class="note">📌 Zanjir qanchalik qisqa bo'lsa, energiya shunchalik kam yo'qotiladi. Shuning uchun ko'p bo'g'inli zanjirlarda yuqori iste'molchilar kamroq bo'ladi.</div>
+
+    <h3>Interaktiv diagramma</h3>
+    <p>"Zanjirni ko'rsatish" yoki "To'rni ko'rsatish" tugmasini bosing. Organizmni bosib, uning ma'lumotini ko'ring.</p>
+    <div class="btns">
+      <button id="btnChain" class="active" onclick="setMode('chain')">Zanjirni ko'rsatish</button>
+      <button id="btnWeb" onclick="setMode('web')">To'rni ko'rsatish</button>
+    </div>
+
+    <svg id="field" viewBox="0 0 700 440" aria-label="Oziq to'ri diagrammasi">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+        </marker>
+      </defs>
+      <g id="edges"></g>
+      <g id="nodes"></g>
+    </svg>
+    <div id="info" style="margin-top:12px;"></div>
+  </section>
+
+  <section id="tajriba">
+    <h2>4. Tajriba: organizmni olib tashlash</h2>
+    <p>Organizmni tanlang va "Olib tashlash" tugmasini bosing. Tabiatdagi zanjir qanday o'zgarishini kuzating.</p>
+    <div class="btns">
+      <select id="pick"></select>
+      <button onclick="removeSelected()">Olib tashlash</button>
+      <button onclick="restoreAll()">Hammasini tiklash</button>
+    </div>
+    <div id="effect"></div>
+    <div class="note">🔎 Savol: Agar barcha qurbaqalar yo'qolsa, nima bo'ladi? Chigirtkalar soni qanday o'zgaradi va bu o'simliklarga qanday ta'sir qiladi?</div>
+  </section>
+
+  <section id="piramida">
+    <h2>5. Energiya piramidasi</h2>
+    <p>Oziq zanjirining har bir bosqichida energiyaning taxminan <b>90%</b> i issiqlik sifatida yo'qoladi va faqat taxminan <b>10%</b> keyingi bosqichga o'tadi. Quyidagi qiymatlar taxminiy:</p>
+    <div id="pyramid"></div>
+    <p style="margin-top:10px;">Shuning uchun tabiatda yirtqichlar soni o'simliklarga qaraganda ancha kam bo'ladi.</p>
+  </section>
+
+  <section id="test">
+    <h2>6. Test</h2>
+    <p>Bilimingizni tekshiring. Har bir savolga bitta javob tanlang.</p>
+    <div id="quiz"></div>
+    <p id="score"></p>
+  </section>
+
+</main>
+
+<footer>Oziq zanjirlari va oziq to'rlari · Interaktiv dars</footer>
+
+<script>
+const nodes = {
+  quyosh:       { x: 70,  y: 60,  n: "Quyosh",       c: "#facc15", d: "Energiya manbai. Barcha tirik organizmlarga energiya beradi." },
+  osimlik:      { x: 160, y: 220, n: "O'simlik",     c: "#22c55e", d: "Produsent. Quyosh energiyasi bilan o'z ozuqasini (glyukoza) hosil qiladi. Chigirtka va sichqonga ozuqa bo'ladi.", type: "Produsent" },
+  chigirtka:    { x: 310, y: 110, n: "Chigirtka",    c: "#84cc16", d: "Birinchi iste'molchi. O'simlik bargi bilan oziqlanadi. Qurbaqaga ozuqa bo'ladi.", type: "Birinchi iste'molchi" },
+  sichqon:      { x: 310, y: 320, n: "Sichqon",      c: "#a8a29e", d: "Birinchi iste'molchi. O'simlik urug'lari va mevalari bilan oziqlanadi. Ilon va burgutga ozuqa bo'ladi.", type: "Birinchi iste'molchi" },
+  qurbaqa:      { x: 470, y: 110, n: "Qurbaqa",      c: "#14b8a6", d: "Ikkinchi iste'molchi. Chigirtka bilan oziqlanadi. Ilonga ozuqa bo'ladi.", type: "Ikkinchi iste'molchi" },
+  ilon:         { x: 470, y: 320, n: "Ilon",         c: "#f97316", d: "Uchinchi iste'molchi. Qurbaqa va sichqon bilan oziqlanadi. Burgutga ozuqa bo'ladi.", type: "Uchinchi iste'molchi" },
+  burgut:       { x: 620, y: 215, n: "Burgut",       c: "#6366f1", d: "Eng yuqori iste'molchi. Ilon va sichqon bilan oziqlanadi.", type: "Eng yuqori iste'molchi" },
+  parchalovchi: { x: 620, y: 395, n: "Parchalovchi", c: "#92400e", d: "Zamburug' va bakteriyalar. O'lgan organizmlarni parchalab, moddalarni tuproqqa qaytaradi.", type: "Parchalovchi" }
+};
+
+const edges = [
+  ["quyosh", "osimlik", "chain"],
+  ["osimlik", "chigirtka", "chain"],
+  ["chigirtka", "qurbaqa", "chain"],
+  ["qurbaqa", "ilon", "chain"],
+  ["ilon", "burgut", "chain"],
+  ["osimlik", "sichqon", "web"],
+  ["sichqon", "ilon", "web"],
+  ["sichqon", "burgut", "web"],
+  ["ilon", "parchalovchi", "decomp"],
+  ["burgut", "parchalovchi", "decomp"]
+];
+
+const NS = "http://www.w3.org/2000/svg";
+const CHAIN_KEYS = ["quyosh", "osimlik", "chigirtka", "qurbaqa", "ilon", "burgut"];
+let mode = "chain";
+const removed = new Set();
+
+function drawGraph() {
+  const eg = document.getElementById("edges");
+  const ng = document.getElementById("nodes");
+  eg.innerHTML = ""; ng.innerHTML = "";
+
+  edges.forEach((e, i) => {
+    const a = nodes[e[0]], b = nodes[e[1]];
+    const dx = b.x - a.x, dy = b.y - a.y, L = Math.hypot(dx, dy);
+    const line = document.createElementNS(NS, "line");
+    line.setAttribute("x1", a.x + dx / L * 32);
+    line.setAttribute("y1", a.y + dy / L * 32);
+    line.setAttribute("x2", b.x - dx / L * 36);
+    line.setAttribute("y2", b.y - dy / L * 36);
+    line.setAttribute("class", "edge" + (e[2] === "decomp" ? " decomp" : ""));
+    line.setAttribute("marker-end", "url(#arrow)");
+    eg.appendChild(line);
+  });
+
+  Object.keys(nodes).forEach(k => {
+    const n = nodes[k];
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", "node");
+    g.dataset.key = k;
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", n.x); c.setAttribute("cy", n.y); c.setAttribute("r", 30);
+    c.setAttribute("fill", n.c);
+    const t = document.createElementNS(NS, "text");
+    t.setAttribute("x", n.x); t.setAttribute("y", n.y + 48);
+    t.textContent = n.n;
+    g.appendChild(c); g.appendChild(t);
+    g.addEventListener("click", () => showInfo(k));
+    ng.appendChild(g);
+  });
+
+  document.getElementById("pick").innerHTML = Object.keys(nodes)
+    .filter(k => k !== "quyosh")
+    .map(k => `<option value="${k}">${nodes[k].n}</option>`).join("");
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById("btnChain").classList.toggle("active", m === "chain");
+  document.getElementById("btnWeb").classList.toggle("active", m === "web");
+  render();
+}
+
+function render() {
+  let flowIndex = 0;
+  document.querySelectorAll("#edges line").forEach((line, i) => {
+    const e = edges[i];
+    line.classList.remove("flow", "dim");
+    line.style.animationDelay = "";
+    if (removed.has(e[0]) || removed.has(e[1])) { line.classList.add("dim"); return; }
+    if (mode === "chain") {
+      if (e[2] === "chain") {
+        line.classList.add("flow");
+        line.style.animationDelay = (flowIndex * 0.4) + "s";
+        flowIndex++;
+      } else {
+        line.classList.add("dim");
+      }
+    }
+  });
+
+  document.querySelectorAll(".node").forEach(g => {
+    const k = g.dataset.key;
+    g.classList.toggle("removed", removed.has(k));
+    g.classList.toggle("dim", mode === "chain" && !CHAIN_KEYS.includes(k));
+  });
+
+  updateEffect();
+}
+
+function showInfo(k) {
+  const n = nodes[k];
+  document.getElementById("info").innerHTML =
+    `<strong>${n.n}</strong>${n.type ? " (" + n.type + ")" : ""}<br>${n.d}`;
+}
+
+function removeSelected() {
+  removed.add(document.getElementById("pick").value);
+  render();
+}
+
+function restoreAll() {
+  removed.clear();
+  render();
+}
+
+function updateEffect() {
+  const box = document.getElementById("effect");
+  if (removed.size === 0) { box.textContent = ""; return; }
+  const msgs = [];
+  removed.forEach(k => {
+    const prey = edges.filter(e => e[1] === k && e[2] !== "decomp").map(e => nodes[e[0]].n);
+    const preds = edges.filter(e => e[0] === k && e[2] !== "decomp").map(e => nodes[e[1]].n);
+    let s = `${nodes[k].n} yo'qoldi. `;
+    if (prey.length) s += `${prey.join(", ")} soni ko'payib ketishi mumkin. `;
+    if (preds.length) s += `${preds.join(", ")} ozuqa yetishmasligidan kamayadi. `;
+    msgs.push(s);
+  });
+  box.textContent = msgs.join(" ");
+}
+
+drawGraph();
+setMode("chain");
+
+const levels = [
+  { name: "Produsent (o'simlik)", val: "10 000 kkal", w: 100, color: "#16a34a" },
+  { name: "Birinchi iste'molchi", val: "1 000 kkal",  w: 60,  color: "#65a30d" },
+  { name: "Ikkinchi iste'molchi", val: "100 kkal",    w: 35,  color: "#0d9488" },
+  { name: "Uchinchi iste'molchi", val: "10 kkal",     w: 20,  color: "#ea580c" },
+  { name: "Eng yuqori iste'molchi", val: "1 kkal",    w: 12,  color: "#4f46e5" }
+];
+document.getElementById("pyramid").innerHTML = levels.map(l =>
+  `<div class="bar-row"><div class="bar-label">${l.name}</div>
+   <div class="bar" style="width:${l.w}%;background:${l.color}">${l.val}</div></div>`
+).join("");
+
+const questions = [
+  { q: "Oziq zanjirining birinchi bo'g'ini kim?", o: ["Quyosh", "O'simlik", "Chigirtka", "Burgut"], a: 1 },
+  { q: "Produsent nima?", o: ["Tayyor ozuqa iste'mol qiluvchi hayvon", "O'z ozuqasini o'zi hosil qiluvchi organizm", "O'lik organizmlarni parchalovchi bakteriya", "Eng yuqori yirtqich"], a: 1 },
+  { q: "Oziq to'ri zanjirdan nimasi bilan farq qiladi?", o: ["Faqat bitta yo'l bo'ladi", "Bir nechta o'zaro bog'langan zanjirlardan iborat", "Quyosh bo'lmaydi", "Hayvonlar bo'lmaydi"], a: 1 },
+  { q: "Qaysi organizm parchalovchi hisoblanadi?", o: ["Qurbaqa", "Zamburug'", "Chigirtka", "Burgut"], a: 1 },
+  { q: "Chigirtka qaysi iste'molchi?", o: ["Birinchi", "Ikkinchi", "Uchinchi", "Eng yuqori"], a: 0 },
+  { q: "Oziq zanjirida energiyaning taxminan qancha foizi keyingi bosqichga o'tadi?", o: ["90%", "50%", "10%", "1%"], a: 2 },
+  { q: "Ozuqa tarkibidagi qaysi modda mushaklar uchun qurilish materiali hisoblanadi?", o: ["Uglevodlar", "Oqsillar", "Yog'lar", "Vitaminlar"], a: 1 },
+  { q: "Ilon zanjirda qaysi bo'g'in?", o: ["Produsent", "Birinchi iste'molchi", "Uchinchi iste'molchi", "Parchalovchi"], a: 2 }
+];
+
+let score = 0, answered = 0;
+document.getElementById("quiz").innerHTML = questions.map((item, qi) => `
+  <div class="quiz-q">
+    <p>${qi + 1}. ${item.q}</p>
+    ${item.o.map((opt, oi) =>
+      `<button class="opt" onclick="answer(${qi}, ${oi}, this)">${opt}</button>`).join("")}
+  </div>`).join("");
+
+function answer(qi, oi, btn) {
+  const row = btn.parentElement;
+  if (row.dataset.done) return;
+  row.dataset.done = "1";
+  const correct = questions[qi].a;
+  row.querySelectorAll("button")[correct].classList.add("ok");
+  if (oi === correct) score++; else btn.classList.add("bad");
+  answered++;
+  const el = document.getElementById("score");
+  if (answered < questions.length) {
+    el.textContent = `Natija: ${score} / ${questions.length}`;
+  } else {
+    el.textContent = score === questions.length
+      ? `Tabriklaymiz! Barcha savollarga to'g'ri javob berdingiz: ${score} / ${questions.length} 🎉`
+      : `Natija: ${score} / ${questions.length}. Mavzuni yana bir bor ko'rib chiqing.`;
+  }
+}
+</script>
+</body>
+</html>
